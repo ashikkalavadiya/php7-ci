@@ -13,6 +13,7 @@ RUN apt-get -y install php7.0-cli \
     php7.0-gd \
     php7.0-json \
     php7.0-intl \
+    php7.0-mbstring \
     php7.0-pgsql \
     php7.0-xsl \
     php7.0-memcached \
