@@ -4,7 +4,7 @@ RUN apt-get -y update && apt-get -y install
 RUN apt-get -y install git curl libcurl3 libcurl3-dev
 # PHP packages
 # -----------------------------------------------------------------------------
-RUN php7.0-cli \
+RUN apt-get -y install php7.0-cli \
     php7.0-mysql \
     php7.0-mcrypt \
     php7.0-imagick \
