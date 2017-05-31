@@ -1,4 +1,4 @@
-FROM php:7
+FROM php:7.0
 MAINTAINER Narendra Vaghela <narendravaghela4389@gmail.com>
 RUN apt-get -y update && apt-get -y install
 RUN apt-get -y install git curl libcurl3 libcurl3-dev
