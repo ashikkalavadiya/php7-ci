@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 MAINTAINER Narendra Vaghela <narendravaghela4389@gmail.com>
 RUN apt-get -y update && apt-get -y install
-RUN apt-get -y install git curl libcurl3 libcurl3-dev zip upzip
+RUN apt-get -y install git curl libcurl3 libcurl3-dev zip
 # PHP7 and packages
 RUN apt-get -y install php7.0
 RUN apt-get -y install php7.0-cli php7.0-mysql php7.0-mcrypt php7.0-curl
