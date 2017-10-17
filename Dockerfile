@@ -1,16 +1,43 @@
-FROM ubuntu:16.04
-MAINTAINER Narendra Vaghela <narendravaghela4389@gmail.com>
-RUN apt-get -y update && apt-get -y install
-RUN apt-get -y install git curl libcurl3 libcurl3-dev zip
-# PHP7 and packages
-RUN apt-get -y install php7.0
-RUN apt-get -y install php7.0-cli php7.0-mysql php7.0-mcrypt php7.0-curl
-RUN apt-get -y install php7.0-xmlrpc php7.0-gd php7.0-json php7.0-intl php7.0-mbstring
-RUN apt-get -y install php7.0-pgsql php7.0-xsl php7.0-zip
-# Install xdebug
-RUN pecl install xdebug-2.5.0 \
-    && docker-php-ext-enable xdebug
-# -----------------------------------------------------------------------------
+FROM php:7.1-apache
+
+RUN apt-get -y update
+RUN apt upgrade -y
+
+# Install important libraries
+RUN apt-get -y install apt-utils build-essential git curl libcurl3 libcurl3-dev zip
+
+# Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN apt-get -y install build-essential nodejs npm
-RUN npm install -g bower
+
+# Install xdebug
+RUN pecl install xdebug-2.5.0
+RUN docker-php-ext-enable xdebug
+
+# Other PHP7 Extensions
+
+RUN apt-get -y install libmcrypt-dev
+RUN docker-php-ext-install mcrypt
+
+RUN apt-get -y install libsqlite3-dev libsqlite3-0 mysql-client
+RUN docker-php-ext-install pdo_mysql 
+RUN docker-php-ext-install pdo_sqlite
+RUN docker-php-ext-install mysqli
+
+RUN docker-php-ext-install curl
+RUN docker-php-ext-install tokenizer
+RUN docker-php-ext-install json
+
+RUN apt-get -y install zlib1g-dev
+RUN docker-php-ext-install zip
+
+RUN apt-get -y install libicu-dev
+RUN docker-php-ext-install -j$(nproc) intl
+
+RUN docker-php-ext-install mbstring
+
+RUN apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng12-dev
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ 
+RUN docker-php-ext-install -j$(nproc) gd
+
+# Enable apache modules
+RUN a2enmod rewrite headers
