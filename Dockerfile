@@ -7,6 +7,9 @@ RUN apt-get -y install php7.0
 RUN apt-get -y install php7.0-cli php7.0-mysql php7.0-mcrypt php7.0-curl
 RUN apt-get -y install php7.0-xmlrpc php7.0-gd php7.0-json php7.0-intl php7.0-mbstring
 RUN apt-get -y install php7.0-pgsql php7.0-xsl php7.0-zip
+# Install xdebug
+RUN pecl install xdebug-2.5.0 \
+    && docker-php-ext-enable xdebug
 # -----------------------------------------------------------------------------
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN apt-get -y install build-essential nodejs npm
