@@ -1,0 +1,22 @@
+web:
+    image: nginx:latest
+    ports:
+        - "80:80"
+        - "443:443"
+    volumes:
+        - ./code:/code
+        - ./[your-vhots].conf:/etc/nginx/conf.d/site.conf
+    links:
+        - php
+php:
+    build: ./php
+    volumes:
+        - ./code:/code
+    links:
+        - mysql
+mysql:
+    image: mariadb
+    environment:
+        - MYSQL_ROOT_PASSWORD=SecrEt
+    volumes:
+        - ./mysql-data/:/var/lib/mysql
